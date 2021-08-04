@@ -9,9 +9,7 @@ import axios from "axios"
 
 export default function Messenger() {
     const [conversations, setConversations] = useState([]);
-    const {user} = useContext(AuthContext);
-
-    console.log(user)
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         const getConversations = async () => {
@@ -33,7 +31,7 @@ export default function Messenger() {
                 <div className="chatMenu">
                     <div className="chatMenuWrapper">
                         <input placeholder="Search for friends" className="chatMenuInput" />
-                        {conversations.map((c) => (
+                        {conversations.map(c => (
                             <Conversation conversation={c} currentUser={user}/>
                         ))}
                     </div>
