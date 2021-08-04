@@ -4,6 +4,7 @@ const Conversation = require("../models/Conversation");
 // new conversation
 /*
     for testing
+    sunny → jane
     {
         "senderId":"61062173566c7eca1ee763bd",
         "receiverId":"605b3dc77a3cf74918165c06"
