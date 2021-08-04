@@ -5,8 +5,8 @@ const Conversation = require("../models/Conversation");
 /*
     for testing
     {
-        "senderId":"605b3dc77a3cf74918165c06",
-        "receiverId":"605b3dc777a3cf74918165c05"
+        "senderId":"61062173566c7eca1ee763bd",
+        "receiverId":"605b3dc77a3cf74918165c06"
     }
 */
 router.post("/", async (req, res) => {
