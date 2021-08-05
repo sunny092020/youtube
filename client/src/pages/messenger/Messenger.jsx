@@ -7,13 +7,30 @@ import { AuthContext } from "../../context/AuthContext"
 import "./messenger.css"
 import axios from "axios"
 
+import {io} from "socket.io-client"
+
 export default function Messenger() {
     const [conversations, setConversations] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+    const socket = useRef();
+    const [onlineUsers, setOnlineUsers] = useState([]);
     const { user } = useContext(AuthContext);
     const scrollRef = useRef();
+
+    useEffect(() => {
+        socket.current = io("ws://localhost:8900");
+    }, []);
+
+    useEffect(() => {
+        socket.current.emit("addUser", user._id);
+        socket.current.on("getUsers", (users) => {
+            setOnlineUsers(
+                user.followings.filter((f) => users.some((u) => u.userId === f))
+            )
+        });
+    }, [user]);
 
     useEffect(() => {
         const getConversations = async () => {
@@ -101,7 +118,11 @@ export default function Messenger() {
                 <div className="chatOnline">
                     <div className="chatOnlineWrapper">
                         <div className="chatOnlineWrapper">
-                            <ChatOnline/>
+                            <ChatOnline 
+                                onlineUsers={onlineUsers}
+                                currentId={user._id}
+                                setCurrentChat={setCurrentChat}
+                            />
                         </div>
                     </div>
                 </div>
