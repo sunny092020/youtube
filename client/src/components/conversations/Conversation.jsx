@@ -3,16 +3,14 @@ import { useContext, useState, useEffect } from "react"
 import axios from "axios";
 
 export default function Conversation({conversation, currentUser}) {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER
 
     useEffect(()=>{
         const friendId = conversation.members.find(m => m !== currentUser._id);
-        console.log("friendId: " + friendId);
         const getUser = async ()=>{
             try {
                 const res = await axios("/users?userId=" + friendId);
-                console.log(res);
-
                 setUser(res.data);
             } catch (error) {
                 console.log(error);
@@ -24,11 +22,11 @@ export default function Conversation({conversation, currentUser}) {
     return (
         <div className="conversation">
             <img 
-                src="https://photo-cms-plo.zadn.vn/w800/Uploaded/2021/bivxpcwk/2019_10_10/soc-2_cmgy.jpg"
+                src={user.profilePicture ? user.profilePicture : PF+"person/noAvatar.png"}
                 alt="" 
                 className="conversationImg" 
             />
-            <span className="conversationName">aaa</span>
+            <span className="conversationName">{user.username}</span>
         </div>
     )
 }
